@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Kahve Deneyimi | Manussa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Açık mavi-gri arka plan */
+            color: #334155; /* Koyu gri metin */
+        }
+        /* Özel kaydırma çubuğu stili */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        /* Carousel için ek stil */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden; /* Gizli taşan içerik */
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-2xl */
+        }
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out; /* Yumuşak geçiş efekti */
+        }
+        .carousel-images img {
+            width: 100%;
+            flex-shrink: 0; /* Resimlerin küçülmesini engelle */
+            object-fit: cover;
+            /* Responsive yükseklik ayarı */
+            height: auto; /* Yüksekliği otomatik ayarla */
+            min-height: 300px; /* Minimum yükseklik */
+            max-height: 500px; /* Maksimum yükseklik */
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .carousel-button.left {
+            left: 1rem;
+        }
+        .carousel-button.right {
+            right: 1rem;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-gray-900 text-white shadow-lg py-4 px-6 fixed w-full z-10 top-0 rounded-b-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-3xl font-extrabold text-teal-400 tracking-wider">
+                Manussa
+            </a>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-8">
+                    <li><a href="#anasayfa" class="text-gray-200 hover:text-teal-400 font-medium transition duration-300">Anasayfa</a></li>
+                    <li><a href="#hakkimizda" class="text-gray-200 hover:text-teal-400 font-medium transition duration-300">Hakkımızda</a></li>
+                    <li><a href="#menu" class="text-gray-200 hover:text-teal-400 font-medium transition duration-300">Menü</a></li>
+                    <li><a href="#galeri" class="text-gray-200 hover:text-teal-400 font-medium transition duration-300">Galeri</a></li>
+                    <li><a href="#iletisim" class="text-gray-200 hover:text-teal-400 font-medium transition duration-300">İletişim</a></li>
+                </ul>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-200 focus:outline-none">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-gray-900 bg-opacity-95 z-20 flex flex-col items-center justify-center space-y-10">
+            <button id="close-mobile-menu" class="absolute top-8 right-8 text-gray-200 focus:outline-none">
+                <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <ul class="text-4xl font-semibold space-y-8 text-center">
+                <li><a href="#anasayfa" class="text-gray-200 hover:text-teal-400 transition duration-300 mobile-nav-link">Anasayfa</a></li>
+                <li><a href="#hakkimizda" class="text-gray-200 hover:text-teal-400 transition duration-300 mobile-nav-link">Hakkımızda</a></li>
+                <li><a href="#menu" class="text-gray-200 hover:text-teal-400 transition duration-300 mobile-nav-link">Menü</a></li>
+                <li><a href="#galeri" class="text-gray-200 hover:text-teal-400 transition duration-300 mobile-nav-link">Galeri</a></li>
+                <li><a href="#iletisim" class="text-gray-200 hover:text-teal-400 transition duration-300 mobile-nav-link">İletişim</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section id="anasayfa" class="relative bg-cover bg-center h-screen flex items-center justify-center text-white pt-24" style="background-image: url('https://www.denizlibeltas.com/timthumb.php?src=cdn/kultur-kafe_0872776001576560512.JPG&w=1300&h=650&zc=1&q=80');">
+        <div class="absolute inset-0 bg-black opacity-60 rounded-b-xl"></div>
+        <div class="relative z-10 text-center px-4 max-w-4xl">
+            <h1 class="text-6xl md:text-8xl font-extrabold leading-tight mb-8 drop-shadow-lg">
+                Her Yudumda Bir Hikaye
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto font-light">
+                Özenle seçilmiş çekirdeklerden, tutkuyla hazırlanan kahveler ve lezzetli atıştırmalıklar...
+            </p>
+            <a href="#menu" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-4 px-10 rounded-full shadow-xl transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-300">
+                Menümüze Göz Atın
+            </a>
+        </div>
+    </section>
+
+    <section id="hakkimizda" class="py-20 bg-white rounded-xl shadow-lg mx-auto my-12 max-w-7xl px-6 md:px-10">
+        <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2 order-2 md:order-1 text-center md:text-left">
+                <h2 class="text-5xl font-bold text-teal-600 mb-8 leading-tight">Tutkuyla Demlenen Kahveler</h2>
+                <p class="text-lg leading-relaxed mb-6 text-gray-700">
+                    Manussa, sadece bir kahve dükkanı değil, aynı zamanda bir yaşam tarzı durağıdır. Yüksek kaliteli kahve çekirdeklerini dünyanın dört bir yanından özenle seçiyor, her bir fincanı sanat eseri titizliğiyle hazırlıyoruz.
+                </p>
+                <p class="text-lg leading-relaxed text-gray-700">
+                    Sıcak ve samimi ortamımızda, ister tek başınıza huzurlu bir an geçirin, ister arkadaşlarınızla keyifli sohbetlere dalın. Her ziyaretinizde unutulmaz bir deneyim sunmak için buradayız.
+                </p>
+            </div>
+            <div class="md:w-1/2 order-1 md:order-2">
+                <div class="carousel-container">
+                    <div class="carousel-images" id="about-carousel-images">
+                        <img src="https://miro.medium.com/v2/resize:fit:1400/1*eUUHyd2xQWxgseLXF11Nwg.png" alt="Kafe İç Mekan 1">
+                        <img src="https://ceotudent.com/wp-content/images/post/user-5/i1scn2.jpg" alt="Kafe İç Mekan 2">
+                        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/39/49/9b/6-kisiden-az-ziyaretlerinizde.jpg?w=900&h=500&s=1" alt="Kafe İç Mekan 3">
+                        </div>
+                    <button class="carousel-button left" id="about-carousel-prev">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button class="carousel-button right" id="about-carousel-next">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="py-20 bg-gray-100 rounded-xl shadow-lg mx-auto my-12 max-w-7xl px-6 md:px-10">
+        <div class="container mx-auto">
+            <h2 class="text-5xl font-bold text-center text-teal-600 mb-16">Menümüzden Seçmeler</h2>
+
+            <h3 class="text-4xl font-semibold text-gray-800 mb-10 text-center border-b-2 border-teal-300 pb-4">Kahveler</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
+                <div class="bg-white p-8 rounded-xl shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 border-t-4 border-teal-500">
+                    <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT7CqNNvREjietHAqIGNAiiUe_AGcDhRYa2_JgKAaYViohMZUiMBgoCG6RIJ12DSIni86IpOIaore62qOGgx0DUTNaU_HdRuToI3kMK3G5SmQ" alt="Espresso" class="w-44 h-44 rounded-full mb-6 object-cover border-4 border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">Espresso</h4>
+                    <p class="text-gray-600 mb-4 text-base">Yoğun ve aromatik, kahve tutkunlarının vazgeçilmezi.</p>
+                    <span class="text-teal-600 font-extrabold text-2xl">55 TL</span>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 border-t-4 border-teal-500">
+                    <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR-cgDg3xqnZTapsgSV9s5zu8fdZF1oOTVV8B_FiyJQMc127WLZMbzzOahS6CiFO54E1foeiuy1iQzm7NLcLEGfZkFS6Dq2TzYBoxJ-AaRy" alt="Latte" class="w-44 h-44 rounded-full mb-6 object-cover border-4 border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">Latte</h4>
+                    <p class="text-gray-600 mb-4 text-base">Sütlü ve pürüzsüz, yumuşak bir kahve deneyimi.</p>
+                    <span class="text-teal-600 font-extrabold text-2xl">70 TL</span>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 border-t-4 border-teal-500">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-C5jO67FU7TjWQhMqJroAIHVYPtW079AgsqNG_RS5Ctd4lsYI-icx7bHVRCwrQd02aZZu52IKjrkxoy_9QYPcLlpe6geVSrrd2JazyYdV" alt="Cappuccino" class="w-44 h-44 rounded-full mb-6 object-cover border-4 border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">Cappuccino</h4>
+                    <p class="text-gray-600 mb-4 text-base">Köpüklü süt ve dengeli espresso ile klasik lezzet.</p>
+                    <span class="text-teal-600 font-extrabold text-2xl">70 TL</span>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 border-t-4 border-teal-500">
+                    <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTFypVutuKCfEFQLDHKXQ5xcpqyN0EWDZ0S752TBP3btDI-8X29MQu8o3ysSqKfVhQVjA2opLS0dj9DUh2l7YZdBPpsKkhdNLbluIC7Ey2LDw" alt="Americano" class="w-44 h-44 rounded-full mb-6 object-cover border-4 border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">Americano</h4>
+                    <p class="text-gray-600 mb-4 text-base">Sıcak su ile inceltilmiş, hafif ve ferahlatıcı.</p>
+                    <span class="text-teal-600 font-extrabold text-2xl">60 TL</span>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 border-t-4 border-teal-500">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6_K08ni3Yqu7zvyVF1Mt8zlFP-FbW6Z4Ozt_E4bCk5wirdBvPz-IQ0WXD_h_GlFBl3VcQ12ME__sr5uF9Z93Z-0qCp5m1foABSPRGHjb3" alt="Türk Kahvesi" class="w-44 h-44 rounded-full mb-6 object-cover border-4 border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">Türk Kahvesi</h4>
+                    <p class="text-gray-600 mb-4 text-base">Geleneksel lezzet, bol köpüklü ve aromatik.</p>
+                    <span class="text-teal-600 font-extrabold text-2xl">50 TL</span>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 border-t-4 border-teal-500">
+                    <img src="https://www.hendekseyirterasi.com/wp-content/uploads/2023/10/filtre-kahve-yanina-ne-gider-736bcfb7-3cb2-4f5c-b634-7c14b5aba40f.jpg" alt="Filtre Kahve" class="w-44 h-44 rounded-full mb-6 object-cover border-4 border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">Filtre Kahve</h4>
+                    <p class="text-gray-600 mb-4 text-base">Günün taze demlenmiş, yumuşak içimli filtre kahvesi.</p>
+                    <span class="text-teal-600 font-extrabold text-2xl">65 TL</span>
+                </div>
+            </div>
+
+            <h3 class="text-4xl font-semibold text-gray-800 mb-10 text-center border-b-2 border-teal-300 pb-4">Tatlılar</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="bg-white p-8 rounded-xl shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 border-t-4 border-teal-500">
+                    <img src="https://www.pastanbul.com.tr/wp-content/uploads/2024/06/butun_limonlucheesecake-min-600x600.jpg" alt="Cheesecake" class="w-44 h-44 rounded-full mb-6 object-cover border-4 border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">Limonlu Cheesecake</h4>
+                    <p class="text-gray-600 mb-4 text-base">Taze limon aromasıyla hafif ve ferahlatıcı.</p>
+                    <span class="text-teal-600 font-extrabold text-2xl">95 TL</span>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 border-t-4 border-teal-500">
+                    <img src="https://d17wu0fn6x6rgz.cloudfront.net/img/w/tarif/mgt/img_1084.webp" alt="Brownie" class="w-44 h-44 rounded-full mb-6 object-cover border-4 border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">Karamelli Brownie</h4>
+                    <p class="text-gray-600 mb-4 text-base">Yoğun çikolata ve akışkan karamelin eşsiz buluşması.</p>
+                    <span class="text-teal-600 font-extrabold text-2xl">80 TL</span>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-xl flex flex-col items-center text-center transform hover:scale-105 transition duration-300 border-t-4 border-teal-500">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr1Kbo_TnizrZ2suyxQvc7rEV3fdEzvgfO-Q&s" alt="Kruvasan" class="w-44 h-44 rounded-full mb-6 object-cover border-4 border-gray-200">
+                    <h4 class="text-2xl font-bold text-gray-900 mb-2">Bademli Kruvasan</h4>
+                    <p class="text-gray-600 mb-4 text-base">Tereyağlı, çıtır çıtır ve badem dolgulu.</p>
+                    <span class="text-teal-600 font-extrabold text-2xl">65 TL</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeri" class="py-20 bg-white rounded-xl shadow-lg mx-auto my-12 max-w-7xl px-6 md:px-10">
+        <div class="container mx-auto">
+            <h2 class="text-5xl font-bold text-center text-teal-600 mb-16">Anlardan Kareler</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="relative overflow-hidden rounded-xl shadow-xl group cursor-pointer">
+                    <img src="https://www.yudamimarlik.com/wp-content/uploads/2021/09/cafe-mimar-2.-foto.jpg" alt="Galeri Fotoğraf 1" class="w-full h-72 object-cover transform group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-xl font-semibold">Sıcak Bir Köşe</p>
+                    </div>
+                </div>
+                <div class="relative overflow-hidden rounded-xl shadow-xl group cursor-pointer">
+                    <img src="https://i.pinimg.com/236x/c3/de/09/c3de0959164f1f8cdf38a492c6a384fc.jpg" alt="Galeri Fotoğraf 2" class="w-full h-72 object-cover transform group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-xl font-semibold">Sanatsal Sunumlar</p>
+                    </div>
+                </div>
+                <div class="relative overflow-hidden rounded-xl shadow-xl group cursor-pointer">
+                    <img src="https://kahvemod.com/wp-content/uploads/2024/08/Espresso-Icin-Kahve-Cekirdegi.jpg.webp" alt="Galeri Fotoğraf 3" class="w-full h-72 object-cover transform group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-xl font-semibold">Taze Çekirdekler</p>
+                    </div>
+                </div>
+                <div class="relative overflow-hidden rounded-xl shadow-xl group cursor-pointer">
+                    <img src="https://i.lezzet.com.tr/images-xxlarge-secondary/en-iyi-tatli-mekanlari-e00bbc02-9e57-4268-bf24-495833937ba5.jpg" alt="Galeri Fotoğraf 4" class="w-full h-72 object-cover transform group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-xl font-semibold">Lezzetli Tatlılar</p>
+                    </div>
+                </div>
+                <div class="relative overflow-hidden rounded-xl shadow-xl group cursor-pointer">
+                    <img src="https://st3.depositphotos.com/11396296/18057/i/450/depositphotos_180578286-stock-photo-latte-art-coffee-art-made.jpg" alt="Galeri Fotoğraf 5" class="w-full h-72 object-cover transform group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-xl font-semibold">Barista Sanatı</p>
+                    </div>
+                </div>
+                <div class="relative overflow-hidden rounded-xl shadow-xl group cursor-pointer">
+                    <img src="https://cdn.pixabay.com/photo/2018/05/17/00/17/bar-3407484_1280.jpg" alt="Galeri Fotoğraf 6" class="w-full h-72 object-cover transform group-hover:scale-110 transition duration-500">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p class="text-white text-xl font-semibold">Rahat Atmosfer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-100 rounded-xl shadow-lg mx-auto my-12 max-w-7xl px-6 md:px-10">
+        <div class="container mx-auto">
+            <h2 class="text-5xl font-bold text-center text-teal-600 mb-16">Müşterilerimizden Gelenler</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="bg-white p-8 rounded-xl shadow-xl border-b-4 border-teal-500 flex flex-col">
+                    <p class="text-lg italic text-gray-700 mb-6 flex-grow">
+                        "Buradaki kahveler tek kelimeyle muhteşem! Her sabah güne başlamak için uğradığım favori mekanım oldu. Personel de çok güler yüzlü."
+                    </p>
+                    <p class="font-semibold text-gray-900 text-right">- Elif Kaya</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-xl border-b-4 border-teal-500 flex flex-col">
+                    <p class="text-lg italic text-gray-700 mb-6 flex-grow">
+                        "Tatlıları denemeden geçmeyin! Özellikle karamelli brownie'ye bayıldım. Ortamın huzuru da cabası."
+                    </p>
+                    <p class="font-semibold text-gray-900 text-right">- Can Yılmaz</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-xl border-b-4 border-teal-500 flex flex-col">
+                    <p class="text-lg italic text-gray-700 mb-6 flex-grow">
+                        "Çalışmak için harika bir yer. Wi-Fi hızlı, kahve akıyor ve atmosfer çok rahatlatıcı. Kesinlikle tavsiye ederim."
+                    </p>
+                    <p class="font-semibold text-gray-900 text-right">- Zeynep Demir</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="iletisim" class="py-20 bg-white rounded-xl shadow-lg mx-auto my-12 max-w-7xl px-6 md:px-10">
+        <div class="container mx-auto">
+            <h2 class="text-5xl font-bold text-center text-teal-600 mb-16">Bize Ulaşın</h2>
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h3 class="text-3xl font-semibold text-gray-900 mb-6">İletişim Bilgileri</h3>
+                    <p class="text-lg text-gray-700 mb-4 flex items-center justify-center md:justify-start">
+                        <svg class="w-6 h-6 mr-3 text-teal-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+                        [Kafe Adresi], [Şehir, Posta Kodu]
+                    </p>
+                    <p class="text-lg text-gray-700 mb-4 flex items-center justify-center md:justify-start">
+                        <svg class="w-6 h-6 mr-3 text-teal-600" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.32.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.12.35.03.75-.24 1.02l-2.2 2.2z"/></svg>
+                        Telefon: <a href="tel:+90XXXXXXXXXX" class="text-teal-600 hover:underline ml-1">+90 XXXXXXXXXX</a>
+                    </p>
+                    <p class="text-lg text-gray-700 mb-6 flex items-center justify-center md:justify-start">
+                        <svg class="w-6 h-6 mr-3 text-teal-600" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        E-posta: <a href="mailto:info@manussa.com" class="text-teal-600 hover:underline ml-1">info@manussa.com</a>
+                    </p>
+
+                    <h3 class="text-3xl font-semibold text-gray-900 mb-6">Çalışma Saatleri</h3>
+                    <p class="text-lg text-gray-700">Pazartesi - Cuma: <span class="font-semibold">08:00 - 22:00</span></p>
+                    <p class="text-lg text-gray-700">Cumartesi - Pazar: <span class="font-semibold">09:00 - 23:00</span></p>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <h3 class="text-3xl font-semibold text-gray-900 mb-6 text-center md:text-left">Bize Yazın</h3>
+                    <form action="https://formspree.io/f/xvgaekdj" method="POST" class="bg-gray-50 p-8 rounded-xl shadow-xl border-t-4 border-teal-500">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 text-lg font-medium mb-2">Adınız Soyadınız</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Adınız Soyadınız" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 text-lg font-medium mb-2">E-posta Adresiniz</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="eposta@example.com" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 text-lg font-medium mb-2">Mesajınız</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Mesajınızı buraya yazın..." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-teal-300">
+                            Mesaj Gönder
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-10 rounded-t-xl">
+        <div class="container mx-auto text-center">
+            <p class="mb-6 text-lg">© 2025 Manussa. Tüm Hakları Saklıdır.</p>
+            <p class="text-sm text-gray-400">Gök&Ar.co Tarafından yapılmıştır</p>
+            <div class="flex justify-center space-x-8 mt-4">
+                <a href="#" class="text-gray-400 hover:text-teal-400 transition duration-300">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22H12c5.523 0 10-4.477 10-10S17.523 2 12 2z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-teal-400 transition duration-300">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M22.585 6.223c.875-.386 1.464-.997 1.464-1.743 0-.875-.589-1.486-1.464-1.743-.875-.257-1.75-.386-2.625-.386H4.25c-1.063 0-2.012.129-2.847.386C.589 3.997 0 4.608 0 5.354c0 .875.589 1.486 1.464 1.743.875.257 1.75.386 2.625.386h15.71c.875 0 1.75-.129 2.625-.386zM22.585 9.223c.875-.386 1.464-.997 1.464-1.743 0-.875-.589-1.486-1.464-1.743-.875-.257-1.75-.386-2.625-.386H4.25c-1.063 0-2.012.129-2.847.386C.589 7.997 0 8.608 0 9.354c0 .875.589 1.486 1.464 1.743.875.257 1.75.386 2.625.386h15.71c.875 0 1.75-.129 2.625-.386zM22.585 12.223c.875-.386 1.464-.997 1.464-1.743 0-.875-.589-1.486-1.464-1.743-.875-.257-1.75-.386-2.625-.386H4.25c-1.063 0-2.012.129-2.847.386C.589 10.997 0 11.608 0 12.354c0 .875.589 1.486 1.464 1.743.875.257 1.75.386 2.625.386h15.71c.875 0 1.75-.129 2.625-.386zM22.585 15.223c.875-.386 1.464-.997 1.464-1.743 0-.875-.589-1.486-1.464-1.743-.875-.257-1.75-.386-2.625-.386H4.25c-1.063 0-2.012.129-2.847.386C.589 13.997 0 14.608 0 15.354c0 .875.589 1.486 1.464 1.743.875.257 1.75.386 2.625.386h15.71c.875 0 1.75-.129 2.625-.386zM22.585 18.223c.875-.386 1.464-.997 1.464-1.743 0-.875-.589-1.486-1.464-1.743-.875-.257-1.75-.386-2.625-.386H4.25c-1.063 0-2.012.129-2.847.386C.589 16.997 0 17.608 0 18.354c0 .875.589 1.486 1.464 1.743.875.257 1.75.386 2.625.386h15.71c.875 0 1.75-.129 2.625-.386z" />
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-teal-400 transition duration-300">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.419 2.865 8.163 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.867-.013-1.7C6.702 18.2 6.105 16.95 6.105 16.95c-.442-1.11-.274-1.897-.19-2.045.13-.244.604-.938 1.157-.905.552.033 1.246.565 1.442.858.572.977 1.598.697 1.986.53.056-.414.22-.697.4-.858-1.518-.172-3.117-.759-3.117-3.376 0-.745.266-1.355.701-1.83-.07-.172-.305-.865.066-1.812 0 0 .572-.183 1.879.697.546-.152 1.125-.228 1.704-.231.579.003 1.158.079 1.704.231 1.307-.88 1.879-.697 1.879-.697.371.947.136 1.64.066 1.812.436.475.701 1.085.701 1.83 0 2.625-1.601 3.203-3.123 3.372.266.23.501.688.501 1.383 0 1-.009 1.81-.013 2.056 0 .267.18.576.688.482C19.137 20.16 22 16.416 22 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/+905XXXXXXXXX?text=Merhaba,%20web%20sitenizden%20ulaşıyorum."
+       class="fixed bottom-8 right-8 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition duration-300 transform hover:scale-110"
+       target="_blank" rel="noopener noreferrer" aria-label="WhatsApp üzerinden iletişime geçin">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.04 2.23c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.03-1.32c1.44.79 3.08 1.23 4.96 1.23 5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.91-9.91zm.04 1.5c4.68 0 8.48 3.8 8.48 8.48S16.72 20.69 12.04 20.69c-1.57 0-3.08-.42-4.39-1.2L4.74 20.7l1.17-3.44c-.79-1.28-1.24-2.77-1.24-4.39 0-4.68 3.8-8.48 8.48-8.48zm-1.46 3.83c-.3-.04-.6-.04-.87.05-.27.09-.5.22-.69.38-.19.17-.33.36-.45.58-.12.22-.18.46-.18.71 0 .25.07.49.21.71.14.22.33.4.56.54.23.14.49.23.75.29.26.06.52.07.78.01.26-.06.5-.18.7-.33.2-.15.35-.33.46-.53.11-.2.17-.42.17-.65 0-.25-.07-.49-.21-.71-.14-.22-.33-.4-.56-.54-.23-.14-.49-.23-.75-.29-.26-.06-.52-.07-.78-.01zM9.54 7.64c.2-.07.4-.07.61-.01.21.06.39.17.53.31.14.15.25.33.32.54.07.21.11.43.11.66 0 .2-.04.38-.13.56-.09.18-.21.34-.36.48-.15.14-.32.25-.5.33-.18.08-.38.12-.57.12-.21 0-.41-.03-.6-.1-.19-.07-.37-.18-.52-.3-.15-.12-.27-.27-.36-.44-.09-.17-.13-.36-.13-.56 0-.27.09-.54.26-.79.17-.25.39-.45.66-.59.27-.14.58-.23.9-.27zM12.04 7.55c.34 0 .66.08.97.23.31.15.58.36.8.61.22.25.39.54.5.86.11.32.16.65.16 1 0 .34-.05.67-.16.99-.11.32-.28.61-.5.87-.22.26-.49.46-.8.62-.31.16-.63.24-.97.24s-.66-.08-.97-.23c-.31-.15-.58-.36-.8-.61-.22-.25-.39-.54-.5-.86-.11-.32-.16-.65-.16-1 0-.34.05-.67.16-.99.11-.32.28-.61.5-.87.22-.26.49-.46.8-.62.31-.16.63-.24.97-.24z" />
+        </svg>
+    </a>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                // Check if href is just '#' or empty, if so, prevent default and scroll to top
+                if (href === '#' || href === '') {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    // Otherwise, try to scroll to the element
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+
+                // Close mobile menu if open
+                if (document.getElementById('mobile-menu').classList.contains('flex')) {
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                    document.getElementById('mobile-menu').classList.remove('flex');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+        });
+
+        closeMobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+            });
+        });
+
+        // About Us Section Carousel Logic
+        const carouselImagesContainer = document.getElementById('about-carousel-images');
+        const carouselPrevButton = document.getElementById('about-carousel-prev');
+        const carouselNextButton = document.getElementById('about-carousel-next');
+        const images = carouselImagesContainer.querySelectorAll('img');
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            // Calculate the transform value to show the current image
+            carouselImagesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        carouselPrevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        });
+
+        carouselNextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        });
+
+        // Initialize carousel to show the first image
+        updateCarousel();
+    </script>
+</body>
+</html>
